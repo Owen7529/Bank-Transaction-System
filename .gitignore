@@ -1,0 +1,56 @@
+HELP.md
+
+# Maven 編譯產物
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Eclipse 設定
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+# 作業系統暫存檔
+.DS_Store
+Thumbs.db
+
+# 日誌
+*.log
+logs/
+
+# 本機環境設定與敏感資料
+.env
+.env.*
+!.env.example
+application-local.properties
+application-secret.properties
+
+# Maven Wrapper 必須保留
+!mvnw
+!mvnw.cmd
+!.mvn/wrapper/maven-wrapper.properties

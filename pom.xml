@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<!-- Spring Boot 父專案，統一管理套件版本 -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>4.1.1</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	
+	<!-- 專案基本資訊 -->
+	<groupId>com.example</groupId>
+	<artifactId>bank-transaction-system</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>bank-transaction-system</name>
+	<description>Bank Account Transaction System</description>
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+	
+	<!-- 指定 Java 編譯版本 -->
+	<properties>
+		<java.version>25</java.version>
+	</properties>
+	
+	<dependencies>
+		
+		<!--
+			Spring Web MVC
+			
+			用途：
+			1. 建立 REST API
+			2. 接收 HTTP 請求
+			3. 回傳 JSON
+			4. 使用內建 Tomcat
+		-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webmvc</artifactId>
+		</dependency>
+
+		<!--
+			Spring Boot 基本測試工具
+			包含 JUnit Jupiter 等測試支援
+		-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<!--
+			Spring MVC 測試工具
+			後續可用來測試 Controller 的 HTTP 請求與回應
+		-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webmvc-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			
+			<!--
+				Spring Boot Maven Plugin
+				
+				用來啟動程式及打包可執行的 JAR
+			-->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
