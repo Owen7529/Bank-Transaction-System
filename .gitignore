@@ -1,56 +1,124 @@
-HELP.md
+# ============================================================
+# 銀行帳戶交易管理系統 - Git 忽略規則
+# 用途：排除本機設定、敏感資訊、編譯產物及暫存檔案。
+# 說明：僅影響尚未納入 Git 追蹤的檔案，不會清除既有提交紀錄。
+# ============================================================
 
-# Maven 編譯產物
+# ------------------------------------------------------------
+# 1. Maven / Java 編譯產物
+# ------------------------------------------------------------
+# Maven 建置時產生的 class、測試報告與 JAR 等檔案。
 target/
-.mvn/wrapper/maven-wrapper.jar
+
+# 保留原專案的例外規則：若原始碼或測試資源內有 target 目錄，
+# 不將該目錄視為一般 Maven 編譯輸出。
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-# Eclipse 設定
-### STS ###
-.apt_generated
+# Maven Wrapper 下載的執行檔；保留 Wrapper 啟動腳本與設定檔。
+.mvn/wrapper/maven-wrapper.jar
+!mvnw
+!mvnw.cmd
+!.mvn/wrapper/maven-wrapper.properties
+
+# 其他工具產生的建置目錄。
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# ------------------------------------------------------------
+# 2. Eclipse / Spring Tool Suite 本機工作環境
+# ------------------------------------------------------------
+# IDE 個人化設定及自動產生的工作檔案；不影響 Maven 專案原始碼。
+.apt_generated/
 .classpath
 .factorypath
 .project
-.settings
+.settings/
 .springBeans
-.sts4-cache
+.sts4-cache/
 
-### IntelliJ IDEA ###
-.idea
+# ------------------------------------------------------------
+# 3. 其他編輯器的本機設定
+# ------------------------------------------------------------
+# IntelliJ IDEA。
+.idea/
 *.iws
 *.iml
 *.ipr
 
-### NetBeans ###
+# NetBeans。
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
+# Visual Studio Code。
 .vscode/
 
-# 作業系統暫存檔
-.DS_Store
-Thumbs.db
+# ------------------------------------------------------------
+# 4. 密碼、環境變數與本機專屬設定
+# ------------------------------------------------------------
+# 實際使用的 MySQL 與系統登入密碼，禁止提交。
+/config/local-secrets.properties
 
-# 日誌
-*.log
-logs/
-
-# 本機環境設定與敏感資料
+# 環境變數檔；允許上傳不含真實密碼的範例。
 .env
 .env.*
 !.env.example
+
+# Spring Boot 本機或私人設定檔。
 application-local.properties
 application-secret.properties
 
-# Maven Wrapper 必須保留
-!mvnw
-!mvnw.cmd
-!.mvn/wrapper/maven-wrapper.properties
+# 請保留以下可公開檔案，不要加入忽略規則：
+# config/local-secrets.properties.example
+# src/main/resources/application.properties（不得放入真實密碼）
+
+# ------------------------------------------------------------
+# 5. 私人專案管理文件
+# ------------------------------------------------------------
+# 用於內部記錄規格、進度與檔案結構，不放入公開儲存庫。
+/PROJECT_SPEC.md
+/PROJECT_STATUS.md
+/FILE_STRUCTURE.md
+
+# ------------------------------------------------------------
+# 6. Release Notes 本機文件
+# ------------------------------------------------------------
+# 正式版更新說明統一維護於 GitHub Releases。
+# 本機草稿或文字檔無須另外提交。
+/RELEASE_NOTES.md
+
+# ------------------------------------------------------------
+# 7. 備份、封存與資料庫匯出檔
+# ------------------------------------------------------------
+# 避免把完整專案壓縮檔、測試資料或資料庫備份上傳。
+*.zip
+*.7z
+*.rar
+*.sql.bak
+*.sql.gz
+*.dump
+*.backup
+
+# 正式資料庫建表及初始化腳本應保留版本追蹤：
+# database/schema.sql
+# database/setup.sql
+
+# ------------------------------------------------------------
+# 8. 日誌、暫存與作業系統檔案
+# ------------------------------------------------------------
+*.log
+logs/
+*.tmp
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# ------------------------------------------------------------
+# 9. 工具產生的非必要說明檔
+# ------------------------------------------------------------
+/HELP.md
