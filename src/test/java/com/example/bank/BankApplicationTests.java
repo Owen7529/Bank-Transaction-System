@@ -1,3 +1,8 @@
+/**
+ * BankApplicationTests
+ * 驗證 Spring Boot ApplicationContext 是否能建立的整合測試類別。
+ */
+
 package com.example.bank;
 
 import org.junit.jupiter.api.Test;

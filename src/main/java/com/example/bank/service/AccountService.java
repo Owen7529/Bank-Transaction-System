@@ -1,3 +1,8 @@
+/**
+ * AccountService
+ * 封裝帳戶開立、查詢及狀態更新的業務規則。
+ */
+
 package com.example.bank.service;
 
 import java.math.BigDecimal;
@@ -26,6 +31,7 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final CustomerRepository customerRepository;
 
+    /** 透過建構子注入帳戶與客戶 Repository。 */
     public AccountService(
             AccountRepository accountRepository,
             CustomerRepository customerRepository) {
@@ -71,7 +77,7 @@ public class AccountService {
             );
         }
 
-        // 使用第3課的建構子建立零餘額帳戶
+        // 使用 Account 建構子建立初始餘額為零的帳戶
         Account account = new Account(
                 customer,
                 accountNumber

@@ -1,3 +1,6 @@
+/**
+ * 啟動時檢查資料庫連線狀態。
+ */
 
 package com.example.bank.config;
 

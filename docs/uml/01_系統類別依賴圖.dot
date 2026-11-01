@@ -1,0 +1,52 @@
+digraph G {
+graph [fontname="Noto Sans CJK TC", bgcolor="white", pad="0.25", nodesep="0.5", ranksep="0.9", dpi=145, splines=polyline]; node [fontname="Noto Sans CJK TC", shape=box, style="rounded,filled", color="#cbd5e1", fillcolor="#f8fafc", margin="0.18,0.10", fontsize=12];edge [fontname="Noto Sans CJK TC",color="#64748b", arrowsize=0.7];
+rankdir=LR;
+labelloc="t"; label="銀行交易系統｜類別依賴關係";fontsize=20;
+subgraph cluster_controller {label="Controller｜處理 HTTP";fontname="Noto Sans CJK TC";color="#e2e8f0";style=rounded;
+"AccountController" [fillcolor="#dbeafe"];
+"BankController" [fillcolor="#dbeafe"];
+"CustomerController" [fillcolor="#dbeafe"];
+"TransactionController" [fillcolor="#dbeafe"];
+"TransactionHistoryController" [fillcolor="#dbeafe"];
+"TransferController" [fillcolor="#dbeafe"];
+}
+subgraph cluster_service {label="Service｜處理業務";fontname="Noto Sans CJK TC";color="#e2e8f0";style=rounded;
+"AccountService" [fillcolor="#dcfce7"];
+"CustomerService" [fillcolor="#dcfce7"];
+"DepositService" [fillcolor="#dcfce7"];
+"TransactionHistoryService" [fillcolor="#dcfce7"];
+"TransferService" [fillcolor="#dcfce7"];
+"WithdrawalService" [fillcolor="#dcfce7"];
+}
+subgraph cluster_repository {label="Repository｜存取資料";fontname="Noto Sans CJK TC";color="#e2e8f0";style=rounded;
+"AccountEntryRepository" [fillcolor="#fef3c7"];
+"AccountRepository" [fillcolor="#fef3c7"];
+"BankTransactionRepository" [fillcolor="#fef3c7"];
+"CustomerRepository" [fillcolor="#fef3c7"];
+"TransactionRequestRepository" [fillcolor="#fef3c7"];
+}
+"AccountController" -> "AccountService";
+"AccountService" -> "AccountRepository";
+"AccountService" -> "CustomerRepository";
+"CustomerController" -> "AccountService";
+"CustomerController" -> "CustomerService";
+"CustomerService" -> "AccountRepository";
+"CustomerService" -> "CustomerRepository";
+"DepositService" -> "AccountEntryRepository";
+"DepositService" -> "AccountRepository";
+"DepositService" -> "BankTransactionRepository";
+"DepositService" -> "TransactionRequestRepository";
+"TransactionController" -> "DepositService";
+"TransactionController" -> "WithdrawalService";
+"TransactionHistoryController" -> "TransactionHistoryService";
+"TransactionHistoryService" -> "AccountEntryRepository";
+"TransactionHistoryService" -> "AccountRepository";
+"TransferController" -> "TransferService";
+"TransferService" -> "AccountRepository";
+"TransferService" -> "DepositService";
+"TransferService" -> "WithdrawalService";
+"WithdrawalService" -> "AccountEntryRepository";
+"WithdrawalService" -> "AccountRepository";
+"WithdrawalService" -> "BankTransactionRepository";
+"WithdrawalService" -> "TransactionRequestRepository";
+}

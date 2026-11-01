@@ -1,3 +1,8 @@
+/**
+ * DepositRequest
+ * 存款請求 DTO，包含請求識別碼、帳戶、金額及用途說明。
+ */
+
 package com.example.bank.dto;
 
 import java.math.BigDecimal;

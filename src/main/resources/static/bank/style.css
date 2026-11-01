@@ -1,0 +1,67 @@
+/* 功能說明：不使用前端框架，直接用 CSS 建立 RWD 排版 */
+:root {
+  color-scheme: light;
+  font-family: system-ui, "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+  color: #1b2d46;
+  background: #f3f6fb;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+.wrap { width: min(1120px, calc(100% - 32px)); margin-inline: auto; }
+.topbar { background: #132a4a; color: white; }
+.topbar-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 12px; font-weight: 800; }
+.brand small { display: block; margin-top: 3px; font-size: 12px; font-weight: 400; color: #b7c8e1; }
+.brand-mark { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 10px; background: #3c7fea; }
+.env-tag { font-size: 12px; border: 1px solid #8499b8; border-radius: 30px; padding: 6px 12px; white-space: nowrap; }
+.heading { padding: 34px 0 18px; }
+h1 { margin: 4px 0 8px; font-size: clamp(26px, 4vw, 34px); }
+.eyebrow { margin: 0; letter-spacing: 2px; font-size: 11px; color: #446c9d; font-weight: 700; }
+.subhead, .hint { color: #617189; }
+.subhead { margin: 0; }
+.panel { background: #fff; border: 1px solid #e3eaf2; border-radius: 16px; padding: 22px; margin-bottom: 18px; box-shadow: 0 4px 14px #1029490a; }
+h2 { font-size: 18px; margin: 0 0 18px; }
+.search-form { display: flex; align-items: end; gap: 12px; flex-wrap: wrap; }
+.search-form label { flex-basis: 100%; margin-bottom: -6px; }
+label, legend { font-size: 14px; font-weight: 650; }
+input[type="text"], input[inputmode="numeric"] {
+  border: 1px solid #c7d3e4; border-radius: 9px; padding: 11px 12px;
+  font: inherit; min-width: 0; width: 100%; background: #fff;
+}
+input:focus-visible, button:focus-visible { outline: 3px solid #9ec7ff; outline-offset: 2px; }
+.search-form input { flex: 1 1 260px; }
+button { border: 0; border-radius: 9px; background: #2563bb; color: white; font: inherit; font-weight: 700; padding: 12px 19px; cursor: pointer; }
+button:hover:not(:disabled) { background: #1a4d99; }
+button:disabled { opacity: .58; cursor: not-allowed; }
+button.secondary { background: #e8eef7; color: #203c65; }
+.message { min-height: 24px; color: #526781; font-size: 14px; margin: 13px 0 0; overflow-wrap: anywhere; }
+.message.error { color: #b42318; }
+.message.success { color: #157047; }
+.account-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 18px 0 0; }
+.account-summary[hidden] { display: none; }
+.account-summary > div { background: #f2f6fc; border-radius: 12px; padding: 14px; }
+dt { color: #5a6f88; font-size: 12px; margin-bottom: 9px; }
+dd { font-size: 16px; font-weight: 700; margin: 0; overflow-wrap: anywhere; }
+dd.balance { font-size: 20px; color: #1c518f; }
+.two-column { display: grid; grid-template-columns: 1.3fr 1fr; gap: 18px; }
+.stack { display: grid; gap: 10px; }
+.stack button { margin-top: 7px; }
+.type-picker { display: flex; flex-wrap: wrap; gap: 18px; border: none; margin: 0 0 6px; padding: 0; }
+.type-picker legend { margin-bottom: 9px; }
+.type-picker label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.notices { padding-left: 20px; color: #526781; font-size: 14px; line-height: 1.9; }
+.section-title-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.section-title-row h2 { margin: 0 0 8px; }
+.section-title-row .hint { margin: 0 0 16px; font-size: 13px; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; min-width: 680px; }
+th, td { padding: 14px 10px; border-bottom: 1px solid #e6edf5; overflow-wrap: anywhere; }
+th { color: #586c85; background: #f7f9fd; white-space: nowrap; }
+.footer { color: #7c8da2; text-align: center; padding: 4px 0 30px; font-size: 12px; }
+@media (max-width: 760px) {
+  .two-column { grid-template-columns: 1fr; gap: 0; }
+  .account-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .panel { padding: 16px; }
+  .env-tag { font-size: 10px; }
+}
+@media (max-width: 430px) { .account-summary { grid-template-columns: 1fr; } }

@@ -1,0 +1,55 @@
+@startuml
+title 銀行帳戶交易管理系統－類別依賴圖（以程式欄位為依據）
+left to right direction
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam defaultFontName Noto Sans CJK TC
+skinparam linetype ortho
+package "HTTP API／Controller" {
+ class AccountController <<Controller>>
+ class BankController <<Controller>>
+ class CustomerController <<Controller>>
+ class TransactionController <<Controller>>
+ class TransactionHistoryController <<Controller>>
+ class TransferController <<Controller>>
+}
+package "業務邏輯／Service" {
+ class AccountService <<Service>>
+ class CustomerService <<Service>>
+ class DepositService <<Service>>
+ class TransactionHistoryService <<Service>>
+ class TransferService <<Service>>
+ class WithdrawalService <<Service>>
+}
+package "資料存取／Repository" {
+ interface AccountEntryRepository <<Repository>>
+ interface AccountRepository <<Repository>>
+ interface BankTransactionRepository <<Repository>>
+ interface CustomerRepository <<Repository>>
+ interface TransactionRequestRepository <<Repository>>
+}
+AccountController ..> AccountService : 注入／使用
+AccountService ..> AccountRepository : 注入／使用
+AccountService ..> CustomerRepository : 注入／使用
+CustomerController ..> AccountService : 注入／使用
+CustomerController ..> CustomerService : 注入／使用
+CustomerService ..> AccountRepository : 注入／使用
+CustomerService ..> CustomerRepository : 注入／使用
+DepositService ..> AccountEntryRepository : 注入／使用
+DepositService ..> AccountRepository : 注入／使用
+DepositService ..> BankTransactionRepository : 注入／使用
+DepositService ..> TransactionRequestRepository : 注入／使用
+TransactionController ..> DepositService : 注入／使用
+TransactionController ..> WithdrawalService : 注入／使用
+TransactionHistoryController ..> TransactionHistoryService : 注入／使用
+TransactionHistoryService ..> AccountEntryRepository : 注入／使用
+TransactionHistoryService ..> AccountRepository : 注入／使用
+TransferController ..> TransferService : 注入／使用
+TransferService ..> AccountRepository : 注入／使用
+TransferService ..> DepositService : 注入／使用
+TransferService ..> WithdrawalService : 注入／使用
+WithdrawalService ..> AccountEntryRepository : 注入／使用
+WithdrawalService ..> AccountRepository : 注入／使用
+WithdrawalService ..> BankTransactionRepository : 注入／使用
+WithdrawalService ..> TransactionRequestRepository : 注入／使用
+@enduml

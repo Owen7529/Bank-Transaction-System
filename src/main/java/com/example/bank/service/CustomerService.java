@@ -1,3 +1,8 @@
+/**
+ * CustomerService
+ * 封裝客戶建立、查詢及狀態更新的業務規則。
+ */
+
 package com.example.bank.service;
 
 import java.util.List;
@@ -78,7 +83,7 @@ public class CustomerService {
     /**
      * 查詢所有客戶。
      *
-     * 本課先使用簡單查詢，
+     * 此處使用基本查詢，
      * 未來可加入分頁。
      */
     @Transactional(readOnly = true)

@@ -1,3 +1,8 @@
+/**
+ * BusinessException
+ * 業務條件不符合時拋出的例外類型。
+ */
+
 package com.example.bank.exception;
 
 /**
@@ -14,6 +19,7 @@ public class BusinessException
 
     private static final long serialVersionUID = 1L;
 
+    /** 使用錯誤訊息建立業務例外，供全域例外處理器轉換回應。 */
     public BusinessException(String message) {
         super(message);
     }

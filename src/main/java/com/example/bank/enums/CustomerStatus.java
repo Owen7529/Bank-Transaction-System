@@ -1,3 +1,8 @@
+/**
+ * CustomerStatus
+ * 客戶狀態列舉，限制客戶可使用的狀態值。
+ */
+
 package com.example.bank.enums;
 
 /**

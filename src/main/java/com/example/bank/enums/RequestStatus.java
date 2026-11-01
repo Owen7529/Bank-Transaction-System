@@ -1,3 +1,8 @@
+/**
+ * RequestStatus
+ * 交易請求處理狀態列舉，協助追蹤重送與完成情況。
+ */
+
 package com.example.bank.enums;
 
 /**

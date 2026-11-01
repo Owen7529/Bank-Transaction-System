@@ -1,3 +1,8 @@
+/**
+ * UpdateCustomerStatusRequest
+ * 客戶狀態更新請求 DTO。
+ */
+
 package com.example.bank.dto;
 
 import com.example.bank.enums.CustomerStatus;

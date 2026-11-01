@@ -1,3 +1,8 @@
+/**
+ * DatabaseConnectionTest
+ * 檢查 MySQL 資料庫連線所需條件的整合測試。
+ */
+
 package com.example.bank.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,3 +1,8 @@
+/**
+ * AccountEntry
+ * 對應 account_entries 資料表的 JPA Entity，記錄單一帳戶的金額變化與變動後餘額。
+ */
+
 package com.example.bank.entity;
 
 import java.math.BigDecimal;
@@ -87,9 +92,11 @@ public class AccountEntry {
     )
     private LocalDateTime createdAt;
 
+    /** 提供 JPA 建立實體所需的無參數建構子。 */
     protected AccountEntry() {
     }
 
+    /** 建立交易資料實體並設定必要欄位。 */
     public AccountEntry(
             BankTransaction transaction,
             Account account,
@@ -102,26 +109,32 @@ public class AccountEntry {
         this.balanceAfter = balanceAfter;
     }
 
+    /** 取得資料表主鍵，供其他程式識別實體。 */
     public Long getId() {
         return id;
     }
 
+    /** 取得明細對應的交易主檔。 */
     public BankTransaction getTransaction() {
         return transaction;
     }
 
+    /** 取得異動明細所屬的帳戶實體。 */
     public Account getAccount() {
         return account;
     }
 
+    /** 取得此次交易對帳戶造成的正負金額變化。 */
     public BigDecimal getAmountChange() {
         return amountChange;
     }
 
+    /** 取得此次變動後的帳戶餘額。 */
     public BigDecimal getBalanceAfter() {
         return balanceAfter;
     }
 
+    /** 取得建立時間戳記。 */
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }

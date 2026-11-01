@@ -1,3 +1,8 @@
+/**
+ * CreateAccountRequest
+ * 建立帳戶時的請求 DTO，定義欄位與 Bean Validation 規則。
+ */
+
 package com.example.bank.dto;
 
 import jakarta.validation.constraints.NotBlank;

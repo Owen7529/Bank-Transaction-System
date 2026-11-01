@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!-- 銀行管理系統首頁：提供主要功能導覽及操作順序。 -->
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="模擬銀行帳戶交易管理系統功能首頁">
+  <title>系統首頁 | 銀行帳戶交易管理系統</title>
+  <link rel="stylesheet" href="./portal.css">
+  <script src="./portal-nav.js" defer></script>
+</head>
+<body class="portal-home">
+  <main>
+    <!-- 首頁介紹與主要功能入口 -->
+    <section class="portal-hero">
+      <div class="portal-container">
+        <div class="portal-eyebrow">BANK TRANSACTION MANAGEMENT</div>
+        <h1>銀行帳戶交易管理系統</h1>
+        <p>從客戶建檔、開立帳戶，到存款、提款、轉帳與資金分析，從首頁選擇想要執行的功能。</p>
+        <div class="portal-hero-actions">
+          <a class="portal-button" href="./customers.html">開始建立客戶 →</a>
+          <a class="portal-button portal-button-alt" href="./transactions.html">進入交易作業</a>
+        </div>
+      </div>
+    </section>
+    <div class="portal-container">
+      <!-- 提供客戶、帳戶與交易等功能的導覽卡片 -->
+      <section class="portal-section" aria-labelledby="features-title">
+        <div class="portal-section-heading">
+          <h2 id="features-title">系統功能</h2>
+          <p>選擇工作項目後進入專屬頁面</p>
+        </div>
+        <div class="portal-cards">
+          <a class="portal-card" href="./customers.html">
+            <div class="portal-card-top"><span class="portal-card-icon" aria-hidden="true">01</span><span class="portal-card-arrow" aria-hidden="true">↗</span></div>
+            <h3>客戶管理</h3><p>建立客戶基本資料，取得客戶 ID 後可直接前往開戶。</p><span class="portal-card-tag">新增客戶</span>
+          </a>
+          <a class="portal-card" href="./accounts.html">
+            <div class="portal-card-top"><span class="portal-card-icon" aria-hidden="true">02</span><span class="portal-card-arrow" aria-hidden="true">↗</span></div>
+            <h3>帳戶管理</h3><p>替已建立的客戶開立帳戶、依帳戶 ID 查詢帳戶詳細資料。</p><span class="portal-card-tag">開戶 · 帳戶查詢</span>
+          </a>
+          <a class="portal-card" href="./transactions.html">
+            <div class="portal-card-top"><span class="portal-card-icon" aria-hidden="true">03</span><span class="portal-card-arrow" aria-hidden="true">↗</span></div>
+            <h3>交易作業與紀錄</h3><p>使用交易操作頁，執行存款、提款、轉帳與交易歷史查詢。</p><span class="portal-card-tag">存提款 · 轉帳 · 交易查詢</span>
+          </a>
+          <a class="portal-card" href="./dashboard.html">
+            <div class="portal-card-top"><span class="portal-card-icon" aria-hidden="true">04</span><span class="portal-card-arrow" aria-hidden="true">↗</span></div>
+            <h3>資金流向儀表板</h3><p>查閱指定帳戶的流入、流出、淨流量和期間內交易趨勢。</p><span class="portal-card-tag">帳戶分析 · 資金趨勢</span>
+          </a>
+        </div>
+      </section>
+      <!-- 說明銀行交易操作的建議順序 -->
+      <section class="portal-section" aria-labelledby="workflow-title">
+        <div class="portal-section-heading"><h2 id="workflow-title">建議操作順序</h2></div>
+        <ol class="portal-workflow">
+          <li>新增客戶</li><li>開立帳戶</li><li>進行交易</li><li>查詢交易紀錄</li><li>檢視儀表板</li>
+        </ol>
+      </section>
+      <p class="portal-note">本系統提供基本登入驗證與角色授權，僅供本機學習及作品展示；尚未實作帳戶層級的資料存取限制，請勿輸入真實客戶個資或公開部署。</p>
+    </div>
+  </main>
+  <footer class="portal-footer">Bank Transaction Management System · Learning Project</footer>
+</body>
+</html>

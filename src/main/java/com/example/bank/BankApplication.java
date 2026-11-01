@@ -1,3 +1,6 @@
+/**
+ * Spring Boot 應用程式啟動入口。
+ */
 package com.example.bank;
 
 import org.springframework.boot.SpringApplication;
@@ -15,10 +18,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 */
 
 @SpringBootApplication
-public class BankApplication {
-	
+public class BankApplication {	
+	/** 啟動 Spring Boot，建立應用程式的 IoC 容器與 Web 服務。 */
 	public static void main(String[] args) {
 		SpringApplication.run(BankApplication.class, args);
 	}
-
 }

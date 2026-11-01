@@ -1,0 +1,55 @@
+@startuml
+title 銀行帳戶交易管理系統－Entity 類別與資料庫關聯
+skinparam shadowing false
+skinparam defaultFontName Noto Sans CJK TC
+hide circle
+skinparam classAttributeIconSize 0
+class Account {
+  - id : Long
+  - customer : Customer
+  - accountNumber : String
+  - balance : BigDecimal
+  - currency : String
+  - status : AccountStatus
+  - version : Long
+  - createdAt : LocalDateTime
+}
+class AccountEntry {
+  - id : Long
+  - transaction : BankTransaction
+  - account : Account
+  - amountChange : BigDecimal
+  - balanceAfter : BigDecimal
+  - createdAt : LocalDateTime
+}
+class BankTransaction {
+  - id : Long
+  - transactionNumber : String
+  - request : TransactionRequest
+  - type : TransactionType
+  - amount : BigDecimal
+  - status : String
+  - description : String
+  - createdAt : LocalDateTime
+}
+class Customer {
+  - id : Long
+  - customerCode : String
+  - name : String
+  - email : String
+  - status : CustomerStatus
+  - createdAt : LocalDateTime
+}
+class TransactionRequest {
+  - id : Long
+  - requestKey : String
+  - requestHash : String
+  - status : RequestStatus
+  - createdAt : LocalDateTime
+  - updatedAt : LocalDateTime
+}
+Customer "1" <-- "0..*" Account : customer_id
+TransactionRequest "1" <-- "0..1" BankTransaction : request_id（唯一）
+BankTransaction "1" <-- "0..*" AccountEntry : transaction_id
+Account "1" <-- "0..*" AccountEntry : account_id
+@enduml

@@ -1,0 +1,181 @@
+<!doctype html>
+<!-- 銀行交易操作頁：提供查詢、存款、提款、轉帳及交易紀錄。 -->
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>銀行帳戶交易管理系統</title>
+  <!-- 交易頁專用樣式 -->
+  <link rel="stylesheet" href="./style.css">
+
+  <!-- 全站共用導覽樣式 -->
+  <link rel="stylesheet" href="./portal.css">
+
+  <!-- 交易操作功能 -->
+  <script src="./app.js" defer></script>
+
+  <!-- 共用導覽列的前端處理 -->
+  <script src="./portal-nav.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand"><span class="brand-mark">B</span><span>Bank Transaction <small>學習專案</small></span></div>
+      <span class="env-tag">本機展示介面</span>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="heading">
+      <div>
+        <p class="eyebrow">BANK ACCOUNT MANAGEMENT</p>
+        <h1>帳戶交易管理</h1>
+        <p class="subhead">透過瀏覽器操作 Spring Boot 銀行交易 API</p>
+      </div>
+    </div>
+
+    <!-- 帳戶查詢區：選擇執行交易的帳戶 -->
+    <section class="panel" aria-labelledby="search-title">
+      <h2 id="search-title">1. 查詢帳戶</h2>
+      <!-- 查詢帳戶並取得可操作的帳戶 ID -->
+      <form id="account-form" class="search-form">
+        <label for="account-id">帳戶 ID</label>
+        <input id="account-id" name="accountId" inputmode="numeric" autocomplete="off"
+               placeholder="例如：1" required pattern="[1-9][0-9]*" maxlength="18">
+        <button type="submit" id="search-button">查詢</button>
+      </form>
+      <p id="account-message" class="message" role="status" aria-live="polite">請輸入帳戶 ID。</p>
+      <dl class="account-summary" id="account-summary" hidden>
+        <div><dt>帳戶號碼</dt><dd id="account-number">—</dd></div>
+        <div><dt>幣別</dt><dd id="currency">—</dd></div>
+        <div><dt>帳戶狀態</dt><dd id="account-status">—</dd></div>
+        <div><dt>目前餘額</dt><dd class="balance" id="balance">—</dd></div>
+      </dl>
+    </section>
+
+    <div class="two-column">
+      <!-- 存提款作業區：檢查金額並提交交易請求 -->
+      <section class="panel" aria-labelledby="txn-title">
+        <h2 id="txn-title">2. 存款／提款</h2>
+        <p class="hint">使用上方查詢的帳戶 ID。送出後，後端會檢查業務規則。</p>
+        <!-- 提交存款或提款請求，並顯示交易結果 -->
+        <form id="transaction-form" class="stack">
+          <fieldset class="type-picker">
+            <legend>交易類型</legend>
+            <label><input type="radio" name="type" value="DEPOSIT" checked> 存款</label>
+            <label><input type="radio" name="type" value="WITHDRAWAL"> 提款</label>
+          </fieldset>
+          <label for="amount">金額（TWD）</label>
+          <input id="amount" name="amount" type="text" inputmode="decimal" placeholder="例如：1200.00"
+                 autocomplete="off" required maxlength="21">
+          <label for="description">備註（可留空）</label>
+          <input id="description" name="description" type="text" maxlength="255"
+                 placeholder="例如：期初存款" autocomplete="off">
+          <button id="submit-transaction" type="submit">執行交易</button>
+        </form>
+        <p id="transaction-message" class="message" role="status" aria-live="polite">尚未送出交易。</p>
+      </section>
+
+      <!-- 交易注意事項與重送請求說明 -->
+      <section class="panel" aria-labelledby="notice-title">
+        <h2 id="notice-title">注意事項</h2>
+        <ul class="notices">
+          <li>目前僅供本機開發與測試，不要上傳真實客戶資料。</li>
+          <li>提款單筆最高 50,000 元，實際驗證以後端為準。</li>
+          <li>發生網路錯誤時，保留相同的 requestKey 重新送出，避免重複扣款。</li>
+          <li>系統已提供基本登入及角色授權，但未實作帳戶層級授權，不可直接作為公開銀行服務。</li>
+        </ul>
+      </section>
+    </div>
+	
+	<!-- 帳戶間轉帳表單 -->
+	<section class="panel" aria-labelledby="transfer-title">
+
+	  <h2 id="transfer-title">3. 帳戶間轉帳</h2>
+
+	  <p class="hint">
+	    將指定金額從來源帳戶轉入另一個帳戶。
+	    來源與目標帳戶必須不同。
+	  </p>
+
+	  <!-- 提交帳戶間轉帳請求，顯示後端回應 -->
+	  <form id="transfer-form" class="stack">
+
+	    <!-- 轉出帳戶 -->
+	    <label for="transfer-from-id">
+	      轉出帳戶 ID
+	    </label>
+
+	    <input
+	      id="transfer-from-id"
+	      type="text"
+	      inputmode="numeric"
+	      pattern="[1-9][0-9]*"
+	      required
+	      placeholder="例如：1">
+
+	    <!-- 轉入帳戶 -->
+	    <label for="transfer-to-id">
+	      轉入帳戶 ID
+	    </label>
+
+	    <input
+	      id="transfer-to-id"
+	      type="text"
+	      inputmode="numeric"
+	      pattern="[1-9][0-9]*"
+	      required
+	      placeholder="例如：2">
+
+	    <!-- 轉帳金額 -->
+	    <label for="transfer-amount">
+	      轉帳金額（TWD）
+	    </label>
+
+	    <input
+	      id="transfer-amount"
+	      type="text"
+	      inputmode="decimal"
+	      required
+	      placeholder="例如：1000.00">
+
+	    <button
+	      type="submit"
+	      id="transfer-button">
+	      確認轉帳
+	    </button>
+
+	  </form>
+
+	  <!-- 顯示轉帳結果 -->
+	  <p
+	    id="transfer-message"
+	    class="message"
+	    role="status"
+	    aria-live="polite">
+	    尚未執行轉帳。
+	  </p>
+
+	</section>
+
+    <!-- 交易紀錄區：顯示帳戶最近 20 筆異動 -->
+    <section class="panel" aria-labelledby="history-title">
+      <div class="section-title-row">
+        <div>
+          <h2 id="history-title">4. 交易紀錄</h2>
+          <p class="hint">查詢目前選取帳戶的最近 20 筆交易明細。</p>
+        </div>
+        <button id="refresh-button" class="secondary" type="button" disabled>重新整理</button>
+      </div>
+      <p id="history-message" class="message" role="status" aria-live="polite">請先查詢帳戶。</p>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>交易編號</th><th>類型</th><th>異動金額</th><th>交易後餘額</th><th>建立時間</th></tr></thead>
+          <tbody id="history-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap footer">Java Web 銀行帳戶交易管理系統 · 示範系統</footer>
+</body>
+</html>

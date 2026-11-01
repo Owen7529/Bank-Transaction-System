@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!-- 客戶管理頁：提供新增客戶功能與輸入驗證。 -->
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>客戶管理 | 銀行帳戶交易管理系統</title>
+  <link rel="stylesheet" href="./management.css">
+  <link rel="stylesheet" href="./portal.css">
+  <script src="./portal-nav.js" defer></script>
+  <script src="./customer-account.js" defer></script>
+</head>
+<body>
+<main class="shell">
+  <!-- 客戶頁的操作說明 -->
+  <section class="intro">
+    <div class="eyebrow">CUSTOMER MANAGEMENT</div>
+    <h1>客戶管理</h1>
+    <p>新增客戶基本資料。建立成功後可直接帶著客戶 ID 前往「帳戶管理」開戶。</p>
+  </section>
+  <div class="steps" aria-label="操作流程">
+    <div><span class="step-number">01</span> 建立客戶</div>
+    <div><span class="step-number">02</span> 開立帳戶</div>
+    <div><span class="step-number">03</span> 交易作業</div>
+  </div>
+  <!-- 新增客戶區：輸入客戶代碼、姓名與電子郵件 -->
+  <section class="panel" aria-labelledby="customer-heading" style="max-width:760px">
+    <div class="panel-heading"><span class="panel-step">CUSTOMER / CREATE</span><h2 id="customer-heading">新增客戶</h2><p>客戶編號不得與現有資料重複。示範資料請勿填寫真實個資。</p></div>
+    <!-- 建立客戶表單，由共用 JavaScript 進行驗證與送出 -->
+    <form id="customer-form">
+      <label for="customer-code">客戶編號 <span class="required">*</span></label>
+      <input id="customer-code" name="customerCode" type="text" required autocomplete="off" placeholder="例如：CUST0001">
+      <label for="customer-name">客戶姓名 <span class="required">*</span></label>
+      <input id="customer-name" name="name" type="text" required autocomplete="off" placeholder="例如：測試客戶">
+      <label for="customer-email">電子郵件</label>
+      <input id="customer-email" name="email" type="email" autocomplete="off" placeholder="例如：test@example.com">
+      <button id="create-customer-btn" type="submit" class="primary">建立客戶</button>
+    </form>
+    <div id="customer-status" role="status" aria-live="polite" class="feedback" hidden></div>
+    <div id="customer-result" class="details" hidden></div>
+    <div class="quick-links">
+      <a id="go-create-account" class="action-link" href="./accounts.html" hidden>使用這位客戶開立帳戶 →</a>
+      <a class="action-link outline" href="./accounts.html">已有客戶 ID？直接開戶 →</a>
+    </div>
+  </section>
+  <p class="security-note">此頁使用 POST /api/customers 建立客戶；客戶狀態變更與查詢可由管理 API 處理。</p>
+</main>
+</body>
+</html>

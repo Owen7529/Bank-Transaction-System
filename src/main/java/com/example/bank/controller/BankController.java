@@ -1,3 +1,8 @@
+/**
+ * BankController
+ * 提供銀行系統健康檢查用途的簡單 HTTP API。
+ */
+
 package com.example.bank.controller;
 
 import java.util.LinkedHashMap;
@@ -10,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class BankController {
+	/** 回傳系統識別資訊與啟動狀態的 JSON。 */
 	@GetMapping("/hello")
 	public Map<String, String> hello(){
 		// 建立 Map 儲存回傳資料

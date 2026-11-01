@@ -1,3 +1,8 @@
+/**
+ * AccountController
+ * 處理帳戶建立、查詢、列表及狀態調整等 HTTP API。
+ */
+
 package com.example.bank.controller;
 
 import java.net.URI;
@@ -28,6 +33,7 @@ public class AccountController {
 
     private final AccountService accountService;
 
+    /** 透過建構子注入帳戶管理服務。 */
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!-- 資金流向儀表板：顯示帳戶資料、期間統計、圖表及交易明細。 -->
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>帳戶資金流向儀表板｜銀行交易管理系統</title>
+    <!-- 儀表板專用樣式 -->
+	<link rel="stylesheet" href="./dashboard.css">
+
+	<!-- 共用導覽列 -->
+	<link rel="stylesheet" href="./portal.css">
+
+	<script src="./dashboard.js" defer></script>
+
+	<!-- 共用導覽功能 -->
+	<script src="./portal-nav.js" defer></script>
+</head>
+<body>
+    <main class="layout">
+        <header class="topbar">
+            <div>
+				<p class="eyebrow">
+				    BANK TRANSACTION SYSTEM · DASHBOARD
+				</p>
+                <h1>帳戶資金流向儀表板</h1>
+                <p class="subtitle">查詢帳戶交易紀錄，分析指定期間的資金流入、流出與餘額變化。</p>
+            </div>
+			<a class="back-link" href="./transactions.html">
+			  返回交易操作頁
+			</a>
+        </header>
+
+        <!-- 查詢條件區：指定帳戶與交易統計期間 -->
+        <section class="panel" aria-labelledby="queryTitle">
+            <h2 id="queryTitle">查詢條件</h2>
+            <!-- 依帳戶 ID 與期間送出查詢，結果由 dashboard.js 更新 -->
+            <form id="queryForm" class="query-form">
+                <label for="accountId">帳戶 ID</label>
+                <input id="accountId" name="accountId" type="number" min="1" step="1"
+                       required placeholder="例如：1" autocomplete="off">
+                <label for="period">統計期間</label>
+                <select id="period" name="period">
+                    <option value="7">最近 7 天</option>
+                    <option value="30" selected>最近 30 天</option>
+                    <option value="90">最近 90 天</option>
+                    <option value="all">全部可取得紀錄</option>
+                </select>
+                <button id="loadButton" type="submit">產生統計</button>
+            </form>
+            <p id="statusMessage" class="message" role="status" aria-live="polite">
+                請輸入帳戶 ID 後開始查詢。
+            </p>
+			<!-- 系統僅提供基本角色授權，未實作個別帳戶的存取限制。 -->
+			<p class="note">
+			    本系統提供基本登入驗證與角色授權，僅供學習及作品展示。
+			    尚未實作帳戶層級的細部授權，請勿使用真實客戶資料或公開部署。
+			</p>
+        </section>
+
+        <!-- 帳戶資訊區：顯示帳號、幣別、狀態及餘額 -->
+        <section class="panel" aria-labelledby="accountTitle">
+            <h2 id="accountTitle">帳戶資訊</h2>
+            <div class="account-info">
+                <p>帳號：<strong id="accountNumber">—</strong></p>
+                <p>幣別：<strong id="accountCurrency">—</strong></p>
+                <p>帳戶狀態：<strong id="accountStatus">—</strong></p>
+                <p>目前餘額：<strong id="accountBalance">—</strong></p>
+            </div>
+        </section>
+
+        <!-- 彙總指定期間的流入、流出、淨流量與明細筆數 -->
+        <section class="stats-grid" aria-label="統計摘要">
+            <article class="stat-card">
+                <h2>流入合計</h2><p id="totalInflow" class="stat-value">—</p>
+                <span>帳戶增加的金額</span>
+            </article>
+            <article class="stat-card">
+                <h2>流出合計</h2><p id="totalOutflow" class="stat-value">—</p>
+                <span>帳戶減少的金額（以正數顯示）</span>
+            </article>
+            <article class="stat-card">
+                <h2>期間淨流量</h2><p id="netFlow" class="stat-value">—</p>
+                <span>流入合計 − 流出合計</span>
+            </article>
+            <article class="stat-card">
+                <h2>明細筆數</h2><p id="entryCount" class="stat-value">—</p>
+                <span>所選期間的帳戶異動筆數</span>
+            </article>
+        </section>
+
+        <!-- 每日資金流向圖：比較每日流入與流出金額 -->
+        <section class="panel" aria-labelledby="chartTitle">
+            <div class="section-heading">
+                <h2 id="chartTitle">每日流入與流出</h2>
+                <span>圖表顯示最近 14 個日曆日（期間較短時依查詢天數）</span>
+            </div>
+            <div class="legend"><span class="legend-in">流入</span><span class="legend-out">流出</span></div>
+            <div id="dailyChart" class="chart" aria-label="每日資金流向橫條圖">
+                <p class="empty-hint">查詢完成後顯示圖表。</p>
+            </div>
+        </section>
+
+        <!-- 交易明細區：列出所選期間最近 20 筆帳戶異動 -->
+        <section class="panel" aria-labelledby="historyTitle">
+            <div class="section-heading">
+                <h2 id="historyTitle">最近 20 筆明細</h2>
+                <span>只顯示所選期間內的資料</span>
+            </div>
+            <div class="table-scroll">
+                <table>
+                    <thead><tr>
+                        <th scope="col">日期時間</th><th scope="col">交易編號</th>
+                        <th scope="col">類型</th><th scope="col">異動金額</th>
+                        <th scope="col">交易後餘額</th>
+                    </tr></thead>
+                    <tbody id="historyBody"><tr><td colspan="5">尚未查詢。</td></tr></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

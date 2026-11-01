@@ -1,3 +1,8 @@
+/**
+ * CustomerController
+ * 處理客戶建立、查詢、列表、狀態調整及客戶帳戶查詢 API。
+ */
+
 package com.example.bank.controller;
 
 import java.net.URI;
@@ -33,6 +38,7 @@ public class CustomerController {
     private final CustomerService customerService;
     private final AccountService accountService;
 
+    /** 透過建構子注入客戶管理及帳戶管理服務。 */
     public CustomerController(
             CustomerService customerService,
             AccountService accountService) {

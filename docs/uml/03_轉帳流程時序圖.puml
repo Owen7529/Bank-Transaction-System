@@ -1,0 +1,27 @@
+@startuml
+title 轉帳處理－依 TransferService.transfer() 實際實作
+autonumber
+actor "登入使用者" as User
+participant "TransferController" as C
+participant "TransferService" as S
+participant "AccountRepository" as R
+participant "WithdrawalService" as W
+participant "DepositService" as D
+database "MySQL（同一資料庫交易）" as DB
+User -> C : POST /api/transfers
+C -> S : transfer(TransferRequest)
+note right of S : 檢查 requestKey、帳戶、金額與兩帳戶不同
+@Transactional(READ_COMMITTED, rollbackFor=Exception)
+S -> R : findByIdForUpdate(較小帳戶ID)
+R -> DB : SELECT ... FOR UPDATE
+S -> R : findByIdForUpdate(較大帳戶ID)
+R -> DB : SELECT ... FOR UPDATE
+S -> W : withdraw(衍生的 TR-OUT-* 請求)
+W -> DB : 更新轉出餘額、交易及異動紀錄
+S -> D : deposit(衍生的 TR-IN-* 請求)
+D -> DB : 更新轉入餘額、交易及異動紀錄
+S --> C : TransferResponse(SUCCESS)
+C --> User : HTTP 200
+note bottom of S : 任一必要步驟失敗會透過交易管理器回滾；
+轉出與轉入共用同一個交易邊界。
+@enduml

@@ -1,3 +1,8 @@
+/**
+ * GlobalExceptionHandler
+ * 集中處理 API 的資源不存在、驗證失敗及資料庫衝突等例外。
+ */
+
 package com.example.bank.exception;
 
 import java.time.LocalDateTime;

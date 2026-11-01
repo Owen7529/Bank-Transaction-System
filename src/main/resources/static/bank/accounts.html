@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!-- 帳戶管理頁：提供開立銀行帳戶及依 ID 查詢帳戶功能。 -->
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>帳戶管理 | 銀行帳戶交易管理系統</title>
+  <link rel="stylesheet" href="./management.css">
+  <link rel="stylesheet" href="./portal.css">
+  <script src="./portal-nav.js" defer></script>
+  <script src="./customer-account.js" defer></script>
+</head>
+<body>
+<main class="shell">
+  <!-- 帳戶頁說明與操作入口 -->
+  <section class="intro">
+    <div class="eyebrow">ACCOUNT MANAGEMENT</div>
+    <h1>帳戶管理</h1>
+    <p>依客戶 ID 開立銀行帳戶；也可查詢現有帳戶並前往交易作業頁面。</p>
+  </section>
+  <div class="form-grid">
+    <!-- 開戶區：輸入客戶 ID 與銀行帳號 -->
+    <section class="panel" aria-labelledby="account-heading">
+      <div class="panel-heading"><span class="panel-step">ACCOUNT / CREATE</span><h2 id="account-heading">開立銀行帳戶</h2><p>若由客戶建立頁進入，客戶 ID 將自動帶入。</p></div>
+      <!-- 開戶表單由 customer-account.js 處理送出與回應 -->
+      <form id="account-form">
+        <label for="account-customer-id">客戶 ID <span class="required">*</span></label>
+        <input id="account-customer-id" name="customerId" type="number" min="1" step="1" required placeholder="例如：1">
+        <label for="account-number">銀行帳號 <span class="required">*</span></label>
+        <input id="account-number" name="accountNumber" type="text" required autocomplete="off" placeholder="輸入尚未使用的帳號">
+        <button id="create-account-btn" type="submit" class="primary">開立帳戶</button>
+      </form>
+      <div id="account-status" class="feedback" role="status" aria-live="polite" hidden></div>
+      <div id="account-result" class="details" hidden></div>
+    </section>
+    <!-- 帳戶查詢區：依帳戶 ID 顯示資料 -->
+    <section class="panel" aria-labelledby="search-heading">
+      <div class="panel-heading"><span class="panel-step">ACCOUNT / LOOKUP</span><h2 id="search-heading">查詢帳戶</h2><p>輸入帳戶 ID，檢查銀行帳號、餘額、幣別與帳戶狀態。</p></div>
+      <!-- 帳戶查詢表單透過 API 取得帳戶資料 -->
+      <form id="search-form">
+        <label for="search-account-id">帳戶 ID <span class="required">*</span></label>
+        <input id="search-account-id" type="number" min="1" step="1" required placeholder="例如：1">
+        <button id="search-btn" type="submit" class="secondary">查詢帳戶</button>
+      </form>
+      <div id="search-status" class="feedback" role="status" aria-live="polite" hidden></div>
+      <div id="search-result" class="details" hidden></div>
+      <div class="quick-links">
+		<a
+		  id="go-transactions"
+		  class="action-link"
+		  href="./transactions.html">
+		  前往交易作業 →
+		</a>
+		<a
+		  id="go-dashboard"
+		  class="action-link outline"
+		  href="./dashboard.html">
+		  查看資金儀表板 →
+		</a>
+      </div>
+    </section>
+  </div>
+  <p class="security-note">新戶初始餘額與狀態由後端帳戶管理服務設定，前端不自行設定或修改資料庫。此專案僅供學習展示。</p>
+</main>
+</body>
+</html>

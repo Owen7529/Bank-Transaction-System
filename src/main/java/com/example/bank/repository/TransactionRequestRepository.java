@@ -1,3 +1,8 @@
+/**
+ * TransactionRequestRepository
+ * 以 Spring Data JPA 查詢及儲存交易請求紀錄的資料存取介面。
+ */
+
 package com.example.bank.repository;
 
 import java.util.Optional;

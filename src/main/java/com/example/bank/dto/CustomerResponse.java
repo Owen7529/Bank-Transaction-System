@@ -1,3 +1,8 @@
+/**
+ * CustomerResponse
+ * 客戶資訊的回應 DTO，對外提供需要公開的欄位。
+ */
+
 package com.example.bank.dto;
 
 import java.time.LocalDateTime;

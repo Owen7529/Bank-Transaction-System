@@ -1,3 +1,8 @@
+/**
+ * CustomerAccountApiIntegrationTest
+ * 透過 HTTP API 驗證客戶建立及帳戶管理流程。
+ */
+
 package com.example.bank.integration;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +26,7 @@ import com.example.bank.service.AccountService;
 import com.example.bank.service.CustomerService;
 
 /**
- * 第4課客戶與帳戶管理整合測試。
+ * 客戶與帳戶管理 API 整合測試。
  *
  * 使用真正的 MySQL。
  *

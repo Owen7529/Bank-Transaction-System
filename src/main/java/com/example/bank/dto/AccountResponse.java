@@ -1,3 +1,8 @@
+/**
+ * AccountResponse
+ * 帳戶查詢的回應 DTO，讓外部使用者不必直接操作 JPA 實體。
+ */
+
 package com.example.bank.dto;
 
 import java.math.BigDecimal;

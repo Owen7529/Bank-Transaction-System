@@ -1,3 +1,8 @@
+/**
+ * BankControllerTest
+ * 測試基本銀行 API 回應的 Controller 測試類別。
+ */
+
 package com.example.bank.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,6 +21,7 @@ BankController 單元測試。
 此測試不需要啟動 Web Server。
 */
 public class BankControllerTest {
+	/** 驗證健康檢查 API 回傳預期的系統識別與狀態。 */
 	@Test
 	void helloShouldReturnCorrectData() {
 		

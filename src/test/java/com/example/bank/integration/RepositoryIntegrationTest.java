@@ -1,3 +1,8 @@
+/**
+ * RepositoryIntegrationTest
+ * 驗證 Repository 與資料表映射的資料庫整合測試。
+ */
+
 package com.example.bank.integration;
 
 import static org.junit.jupiter.api.Assertions.*;

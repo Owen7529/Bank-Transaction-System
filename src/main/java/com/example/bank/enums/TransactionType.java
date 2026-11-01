@@ -1,3 +1,8 @@
+/**
+ * TransactionType
+ * 交易種類列舉，用於標記存款、提款等交易類型。
+ */
+
 package com.example.bank.enums;
 
 /**

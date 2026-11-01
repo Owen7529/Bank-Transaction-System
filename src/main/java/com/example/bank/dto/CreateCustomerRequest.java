@@ -1,3 +1,8 @@
+/**
+ * CreateCustomerRequest
+ * 建立客戶時的請求 DTO，定義輸入欄位與驗證條件。
+ */
+
 package com.example.bank.dto;
 
 import jakarta.validation.constraints.Email;

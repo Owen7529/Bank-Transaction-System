@@ -1,0 +1,15 @@
+digraph G {
+graph [fontname="Noto Sans CJK TC", bgcolor="white", pad="0.25", nodesep="0.5", ranksep="0.9", dpi=145, splines=polyline]; node [fontname="Noto Sans CJK TC", shape=box, style="rounded,filled", color="#cbd5e1", fillcolor="#f8fafc", margin="0.18,0.10", fontsize=12];edge [fontname="Noto Sans CJK TC",color="#64748b", arrowsize=0.7];
+rankdir=TB;
+labelloc="t";label="資料實體類別圖｜欄位與外鍵";fontsize=20;
+node [shape=record,style="rounded,filled",fillcolor="#eff6ff", fontsize=11];
+"Account" [label="{Account|id : Long\lcustomer : Customer\laccountNumber : String\lbalance : BigDecimal\lcurrency : String\lstatus : AccountStatus\lversion : Long\lcreatedAt : LocalDateTime\l}"];
+"AccountEntry" [label="{AccountEntry|id : Long\ltransaction : BankTransaction\laccount : Account\lamountChange : BigDecimal\lbalanceAfter : BigDecimal\lcreatedAt : LocalDateTime\l}"];
+"BankTransaction" [label="{BankTransaction|id : Long\ltransactionNumber : String\lrequest : TransactionRequest\ltype : TransactionType\lamount : BigDecimal\lstatus : String\ldescription : String\lcreatedAt : LocalDateTime\l}"];
+"Customer" [label="{Customer|id : Long\lcustomerCode : String\lname : String\lemail : String\lstatus : CustomerStatus\lcreatedAt : LocalDateTime\l}"];
+"TransactionRequest" [label="{TransactionRequest|id : Long\lrequestKey : String\lrequestHash : String\lstatus : RequestStatus\lcreatedAt : LocalDateTime\lupdatedAt : LocalDateTime\l}"];
+"Account" -> "Customer" [label="customer_id"];
+"BankTransaction" -> "TransactionRequest" [label="request_id (UNIQUE)"];
+"AccountEntry" -> "BankTransaction" [label="transaction_id"];
+"AccountEntry" -> "Account" [label="account_id"];
+}

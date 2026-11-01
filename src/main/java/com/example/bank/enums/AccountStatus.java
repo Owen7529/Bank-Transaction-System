@@ -1,3 +1,8 @@
+/**
+ * AccountStatus
+ * 帳戶狀態列舉，限制帳戶可使用的狀態值。
+ */
+
 package com.example.bank.enums;
 
 /**

@@ -1,0 +1,29 @@
+digraph G {
+graph [fontname="Noto Sans CJK TC", bgcolor="white", pad="0.25", nodesep="0.5", ranksep="0.9", dpi=145, splines=polyline]; node [fontname="Noto Sans CJK TC", shape=box, style="rounded,filled", color="#cbd5e1", fillcolor="#f8fafc", margin="0.18,0.10", fontsize=12];edge [fontname="Noto Sans CJK TC",color="#64748b", arrowsize=0.7];
+rankdir=TB;
+labelloc="t";label="轉帳處理流程｜TransferService.transfer()";fontsize=20;
+node [fillcolor="#eff6ff"];
+"request" [label="接收 POST /api/transfers
+TransferController",fillcolor="#eff6ff"];
+"validate" [label="驗證請求識別碼、帳戶與金額",fillcolor="#eff6ff"];
+"self" [label="確認不是同一個來源與目標帳戶",fillcolor="#eff6ff"];
+"lock" [label="依帳戶 ID 固定順序加上資料庫鎖",fillcolor="#eff6ff"];
+"out" [label="呼叫 WithdrawalService.withdraw()
+請求鍵 TR-OUT-*",fillcolor="#eff6ff"];
+"in" [label="呼叫 DepositService.deposit()
+請求鍵 TR-IN-*",fillcolor="#eff6ff"];
+"success" [label="回傳 TransferResponse
+由交易管理器提交",fillcolor="#dcfce7"];
+"fail" [label="任一步驟失敗：回滾交易",fillcolor="#fee2e2"];
+request -> validate;
+validate -> self;
+self -> lock;
+lock -> out;
+out -> in;
+in -> success;
+validate -> fail [label="例外",style=dashed,color="#c2410c"];
+self -> fail [label="例外",style=dashed,color="#c2410c"];
+lock -> fail [label="例外",style=dashed,color="#c2410c"];
+out -> fail [label="例外",style=dashed,color="#c2410c"];
+in -> fail [label="例外",style=dashed,color="#c2410c"];
+}

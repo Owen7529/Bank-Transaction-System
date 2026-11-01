@@ -1,3 +1,8 @@
+/**
+ * Account
+ * 對應 accounts 資料表的 JPA Entity，記錄客戶關聯、帳號、餘額及版本欄位。
+ */
+
 package com.example.bank.entity;
 
 import java.math.BigDecimal;
@@ -27,10 +32,8 @@ import jakarta.persistence.Version;
  *
  * 對應資料表：accounts
  *
- * 注意：
- * 正式交易不能直接透過 Controller
- * 修改 balance，必須由 TransactionService
- * 統一處理。
+ * 餘額更新由 DepositService 與 WithdrawalService 執行業務驗證，
+ * TransferService 負責協調跨帳戶轉帳；Controller 不直接修改餘額。
  */
 @Entity
 @Table(name = "accounts")
@@ -98,6 +101,7 @@ public class Account {
     )
     private LocalDateTime createdAt;
 
+    /** 提供 JPA 建立實體所需的無參數建構子。 */
     protected Account() {
     }
 
@@ -112,34 +116,42 @@ public class Account {
         this.accountNumber = accountNumber;
     }
 
+    /** 取得資料表主鍵，供其他程式識別實體。 */
     public Long getId() {
         return id;
     }
 
+    /** 取得帳戶所屬客戶實體。 */
     public Customer getCustomer() {
         return customer;
     }
 
+    /** 取得銀行帳號。 */
     public String getAccountNumber() {
         return accountNumber;
     }
 
+    /** 取得目前帳戶餘額。 */
     public BigDecimal getBalance() {
         return balance;
     }
 
+    /** 取得帳戶幣別。 */
     public String getCurrency() {
         return currency;
     }
 
+    /** 取得目前業務狀態。 */
     public AccountStatus getStatus() {
         return status;
     }
 
+    /** 取得 JPA 樂觀鎖版本欄位。 */
     public Long getVersion() {
         return version;
     }
 
+    /** 取得建立時間戳記。 */
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -147,20 +159,16 @@ public class Account {
     /**
      * 變更帳戶狀態。
      *
-     * 第 4 課會由 AccountService
-     * 驗證是否允許停用。
+     * 停用與重新啟用的業務條件由 AccountService 驗證。
      */
     public void setStatus(AccountStatus status) {
         this.status = status;
     }
 
     /**
-     * 供未來 TransactionService 使用。
-     *
-     * 注意：此方法不會自行檢查餘額、
-     * 金額格式或帳戶狀態。
-     *
-     * 不可直接提供給 Controller 呼叫。
+     * 設定交易完成後的帳戶餘額。
+     * 此方法不會檢查餘額、金額格式或帳戶狀態，
+     * 呼叫前應由存提款服務完成相關業務驗證。
      */
     public void updateBalance(BigDecimal newBalance) {
         this.balance = newBalance;
