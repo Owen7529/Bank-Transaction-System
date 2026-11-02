@@ -40,20 +40,50 @@ function message(id, text, type = "") {
   target.className = `message ${type}`;
 }
 
-// 呼叫後端 API，並處理 JSON 回應
+/**
+ * 取得目前登入工作階段的 CSRF Token。
+ * Spring Security 使用此 Token 驗證修改資料的 HTTP 請求。
+ */
+async function csrfHeaders() {
+  const response = await fetch("/api/csrf", {
+    method: "GET",
+    credentials: "same-origin",
+    cache: "no-store",
+    headers: { Accept: "application/json" }
+  });
+
+  if (!response.ok) {
+    throw new Error(`無法取得 CSRF Token（HTTP ${response.status}）`);
+  }
+
+  const csrf = await response.json();
+  if (!csrf.headerName || !csrf.token) {
+    throw new Error("伺服器未提供有效的 CSRF Token");
+  }
+
+  return { [csrf.headerName]: csrf.token };
+}
+
+/**
+ * 傳送銀行交易 API 請求並解析 JSON 回應。
+ * 寫入操作附加 CSRF Token；錯誤回應保留欄位驗證資訊供畫面顯示。
+ */
 async function requestJson(url, options = {}) {
+  const method = (options.method || "GET").toUpperCase();
+  const writeRequest = !["GET", "HEAD", "OPTIONS", "TRACE"].includes(method);
+  const headers = {
+    Accept: "application/json",
+    ...(options.body ? { "Content-Type": "application/json" } : {}),
+    ...(options.headers || {})
+  };
+  if (writeRequest) {
+    Object.assign(headers, await csrfHeaders());
+  }
 
   const response = await fetch(url, {
     ...options,
-    headers: {
-      Accept: "application/json",
-
-      ...(options.body
-        ? { "Content-Type": "application/json" }
-        : {}),
-
-      ...(options.headers || {})
-    }
+    credentials: "same-origin",
+    headers
   });
 
   const raw = await response.text();

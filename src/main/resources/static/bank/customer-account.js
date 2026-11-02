@@ -33,15 +33,47 @@
     box.hidden = false;
   }
 
-  // 統一封裝前端 API 請求、驗證錯誤回應與認證資訊。
+  /**
+   * 取得目前登入工作階段的 CSRF Token。
+   * Token 隨寫入請求送至 Spring Security，避免跨站請求偽造。
+   */
+  async function csrfHeaders() {
+    const response = await fetch("/api/csrf", {
+      method: "GET",
+      credentials: "same-origin",
+      cache: "no-store",
+      headers: { Accept: "application/json" }
+    });
+    if (!response.ok) {
+      throw new Error(`無法取得 CSRF Token（HTTP ${response.status}）`);
+    }
+    const csrf = await response.json();
+    if (!csrf.headerName || !csrf.token) {
+      throw new Error("伺服器未提供有效的 CSRF Token");
+    }
+    return { [csrf.headerName]: csrf.token };
+  }
+
+  /**
+   * 送出 API 請求並解析回應。
+   * 修改資料的請求附加 CSRF Token；失敗時彙整後端訊息與欄位驗證結果。
+   */
   async function callApi(path, options = {}) {
+    const method = (options.method || "GET").toUpperCase();
+    const writeRequest = !["GET", "HEAD", "OPTIONS", "TRACE"].includes(method);
+    const headers = {
+      Accept: "application/json",
+      ...(options.body ? { "Content-Type": "application/json" } : {}),
+      ...(options.headers || {})
+    };
+    if (writeRequest) {
+      Object.assign(headers, await csrfHeaders());
+    }
+
     const response = await fetch(path, {
       ...options,
-      headers: {
-        Accept: "application/json",
-        ...(options.body ? { "Content-Type": "application/json" } : {}),
-        ...(options.headers || {})
-      }
+      credentials: "same-origin",
+      headers
     });
     const raw = await response.text();
     let result = {};
@@ -53,7 +85,7 @@
       const pieces = [];
       if (typeof result.message === "string") pieces.push(result.message);
       if (typeof result.detail === "string") pieces.push(result.detail);
-	  // 顯示後端DTO欄位驗證錯誤
+	  // 將 DTO 欄位驗證訊息併入錯誤內容。
 	  if (
 	    result.fieldErrors &&
 	    typeof result.fieldErrors === "object"
