@@ -4,6 +4,24 @@
 
 本系統以模擬金融業務流程為設計範圍，不連接實際金融機構或進行真實資金移轉。
 
+## 系統畫面
+
+### 系統首頁
+
+![系統首頁](docs/screenshots/01-home.png)
+
+### 客戶與帳戶管理
+
+![客戶與帳戶管理](docs/screenshots/02-customer-account.png)
+
+### 銀行交易操作
+
+![銀行交易操作](docs/screenshots/03-transactions.png)
+
+### 資金流向儀表板
+
+![資金流向儀表板](docs/screenshots/04-dashboard.png)
+
 ## 系統功能
 
 | 功能 | 說明 |
