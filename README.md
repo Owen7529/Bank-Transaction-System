@@ -164,7 +164,7 @@ mvn clean package
 在含有 `pom.xml` 與 `config/` 的專案根目錄執行：
 
 ```bash
-java -jar target/bank-transaction-system-0.0.1-SNAPSHOT.jar
+java -jar target/bank-transaction-system-1.0.0.jar
 ```
 
 網站入口：[http://localhost:8080/bank/index.html](http://localhost:8080/bank/index.html)
